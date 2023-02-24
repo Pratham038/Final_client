@@ -12,7 +12,7 @@ import Star from "../Components/Star";
 import AddToCart from "../Components/AddToCart";
 
 //const API = "https://api.pujakaitem.com/api/products";
-const API = "http://localhost:4000/api/products";
+const API = "https://frefishserver.onrender.com/api/products";
 
 function SingleProduct() {
   const { getSingleProduct, singleProduct, isSingleLoading } =
@@ -45,6 +45,7 @@ function SingleProduct() {
         <div className="img1">
           {/* product Images  */}
           <div className="product_images">
+            <img src={image} alt={name} />
             {/* <MyImage imgs={image} /> */}
           </div>
         </div>
@@ -113,15 +114,11 @@ const Container = styled.div`
   width: 100%;
 
   .info {
-
+    
     padding: 2rem 10rem;
     gap: 5rem;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-  }
-
-  .img1{
-    padding-top: 4rem;
   }
 
   .product-data {
@@ -181,7 +178,11 @@ const Container = styled.div`
       font-weight: 700;
       font-stretch: expanded;
     }
-  }  
+  } 
+  img{
+    width: 40rem;
+    height: 30rem;
+  } 
 `;
 
 export default SingleProduct;

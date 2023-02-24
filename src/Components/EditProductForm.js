@@ -9,7 +9,7 @@ const EditProductForm = ({singleProduct}) => {
         name: '',
         image: '',
         description: '',
-        colors: '',
+        quantity: '',
         price: '',
         stock: '',
         reviews: '',
@@ -53,7 +53,7 @@ console.log(id);
           name: single.name,
           image: single.image,
           description: single.description,
-          colors: single.colors,
+          quantity: single.quantity,
           price: single.price,
           stock: single.stock,
           reviews: single.reviews,
@@ -63,7 +63,7 @@ console.log(id);
     };
 
     axios
-      .put(`http://localhost:4000/api/products/${id}`, data)
+      .put(`https://frefishserver.onrender.com/api/products/${id}`, data)
       .then((res) => {
         alert('UPdated PRESS F5')
       })
@@ -201,13 +201,13 @@ console.log(id);
             </div>
             <br/>
             <div className='form-group'>
-              <label htmlFor='colors'>colors :</label>
+              <label htmlFor='quantity'>quantity :</label>
               <input
                 type='text'
-                placeholder='colors'
-                name='colors'
+                placeholder='quantity'
+                name='quantity'
                 className='form-control'
-                value={single.colors}
+                value={single.quantity}
                 onChange={onChange}
               />
             </div>

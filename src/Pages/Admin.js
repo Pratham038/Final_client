@@ -3,6 +3,10 @@ import { useState, useEffect } from "react";
 import ProductDetails from "../Components/ProductDetails";
 import styled from "styled-components";
 import { NavLink } from "react-router-dom";
+import { Button } from "../Components/AddToCart";
+import {toast, ToastContainer} from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css'
+import AdminNavbar from '../Components/AdminNavbar'
 
 const Admin = () => {
   const [name, setName] = useState("");
@@ -16,13 +20,13 @@ const Admin = () => {
   const [category, setCategory] = useState("");
   const [featured, setFeatured] = useState("");
   const [error, setError] = useState(null);
-  const [colors, setColors] = useState([]);
+  const [quantity, setQuantity] = useState([]);
 
   //fetcch
   const [products, setProducts] = useState(null);
   useEffect(() => {
     const fetchProducts = async () => {
-      const response = await fetch("/api/products");
+      const response = await fetch("https://frefishserver.onrender.com/api/products");
       const json = await response.json();
 
       if (response.ok) {
@@ -35,11 +39,10 @@ const Admin = () => {
 
   const prductNewSubmit = async (e) => {
     e.preventDefault();
-
     const product = {
       name,
       image,
-      colors,
+      quantity,
       price,
       description,
       id,
@@ -50,7 +53,7 @@ const Admin = () => {
       featured,
     };
 
-    const response = await fetch("api/products", {
+    const response = await fetch("https://frefishserver.onrender.com/api/products", {
       method: "POST",
       body: JSON.stringify(product),
       headers: {
@@ -73,130 +76,155 @@ const Admin = () => {
       setStars("");
       setImage("");
       setError(null);
-      alert("new product added", json);
       // console.log("new product added", json);
+      toast.success("Product Added💕",{
+        position: toast.POSITION.TOP_RIGHT,
+        className: 'toast-message'
+      })
+    }
+    if (!response.ok){
+      toast.error("Product not Added",{
+        position: toast.POSITION.TOP_RIGHT,
+        className: 'toast-message'
+      })
     }
   };
   const handleColorsChange = (event) => {
-    setColors(event.target.value.split(","));
+    setQuantity(event.target.value.split(","));
   };
 
   return (
     <>
-    <Seperateproduct>
-      <form onSubmit={prductNewSubmit}>
-        <h3>ADD A new Product</h3>
+    <AdminNavbar/>
+      <Wrapper>
+        <Seperateproduct>
+          <form onSubmit={prductNewSubmit}>
+            <h3>ADD A new Product</h3>
 
-        <label>Product ID :</label>
+            <input
+            placeholder="Product ID"
+              type="text"
+              onChange={(e) => setId(e.target.value)}
+              value={id}
+            />
 
-        <input type="text" onChange={(e) => setId(e.target.value)} value={id} />
+            <input
+            placeholder="Product Name"
+              type="text"
+              onChange={(e) => setName(e.target.value)}
+              value={name}
+            />
 
-        <label>Product Name :</label>
+            <input
+            placeholder="Product Price"
+              type="number"
+              onChange={(e) => setPrice(e.target.value)}
+              value={price}
+            />
 
-        <input
-          type="text"
-          onChange={(e) => setName(e.target.value)}
-          value={name}
-        />
+            <input
+            placeholder="Product Description"
+              type="text"
+              onChange={(e) => setDescription(e.target.value)}
+              value={description}
+            />
 
-        <label>Product Price :</label>
-        <h6>value will be /100 .</h6>
-        <input
-          type="number"
-          onChange={(e) => setPrice(e.target.value)}
-          value={price}
-        />
+            <input
+            placeholder="Product stock"
+              type="number"
+              onChange={(e) => setStock(e.target.value)}
+              value={stock}
+            />
 
-        <label>Product Description :</label>
-        <input
-          type="text"
-          onChange={(e) => setDescription(e.target.value)}
-          value={description}
-        />
+            <input
+            placeholder="Product Reviews"
+              type="number"
+              onChange={(e) => setReviews(e.target.value)}
+              value={reviews}
+            />
 
-        <label>Product stock :</label>
-        <input
-          type="number"
-          onChange={(e) => setStock(e.target.value)}
-          value={stock}
-        />
+            <input
+            placeholder="Product stars"
+              type="number"
+              onChange={(e) => setStars(e.target.value)}
+              value={stars}
+            />
 
-        <label>Product Reviews :</label>
-        <input
-          type="number"
-          onChange={(e) => setReviews(e.target.value)}
-          value={reviews}
-        />
+            <input
+            placeholder="Product Advertised ? "
+              type="text"
+              onChange={(e) => setFeatured(e.target.value)}
+              value={featured}
+            />
 
-        <label>Product stars :</label>
-        <input
-          type="number"
-          onChange={(e) => setStars(e.target.value)}
-          value={stars}
-        />
+            <input
+            placeholder="Product category"
+              type="text"
+              onChange={(e) => setCategory(e.target.value)}
+              value={category}
+            />
 
-        <label>Product Advertise ? :</label>
-        <h6>true ki false</h6>
+            <input
+            placeholder="Product Image link"
+              type="text"
+              onChange={(e) => setImage(e.target.value)}
+              value={image}
+            />
 
-        <input
-          type="text"
-          onChange={(e) => setFeatured(e.target.value)}
-          value={featured}
-        />
+            {/* TRY0 */}
+            <div>
+              <input
+              placeholder="Size"
+                type="text"
+                id="quantity"
+                name="quantity"
+                value={quantity.join(",")}
+                onChange={handleColorsChange}
+              />
+            </div>
 
-        <label>Product category :</label>
-
-        <input
-          type="text"
-          onChange={(e) => setCategory(e.target.value)}
-          value={category}
-        />
-
-        <label>Product Image link:</label>
-
-        <input
-          type="text"
-          onChange={(e) => setImage(e.target.value)}
-          value={image}
-        />
-
-        {/* TRY0 */}
-        <div>
-          <label htmlFor="colors">Size :</label>
-          <input
-            type="text"
-            id="colors"
-            name="colors"
-            value={colors.join(",")}
-            onChange={handleColorsChange}
-          />
+            <Button type="submit" onSubmit={prductNewSubmit}>
+              Add Product
+            </Button>
+            {error && <div className="error">{error}</div>}
+          </form>
+        </Seperateproduct>
+        <div className="products">
+          {products &&
+            products.map((product) => (
+              <>
+                <NavLink to={`/editproduct/${product.id}`}>
+                  <ProductDetails key={product._id} product={product} />
+                </NavLink>
+              </>
+            ))}
         </div>
-
-        <button type="submit" onSubmit={prductNewSubmit}>
-          Add Product
-        </button>
-        {error && <div className="error">{error}</div>}
-      </form>
-      </Seperateproduct>
-      <div className="products">
-        {products &&
-          products.map((product) => (
-            <>
-             <NavLink to={`/editproduct/${product.id}`} >
-              <ProductDetails key={product._id} product={product} />
-              </NavLink>
-            </>
-          ))}
-      </div>
-      
+      </Wrapper>
     </>
   );
 };
 
 export default Admin;
 
+const Wrapper = styled.div`
+  display: flex;
+  width: 100%;
+  flex-direction: row-reverse;
+
+  .products{
+    width: 100%;
+  }
+  h3{
+    text-align:center;
+  }
+`;
+
 const Seperateproduct = styled.div`
+width: 30%;
   background-color: aqua;
-  border: 3px solid #333;
-  margin: 2rem;
+  margin: 1rem;
+  padding: 1rem;
+  border-radius: 7%;
+  height: 100%;
+
 `;

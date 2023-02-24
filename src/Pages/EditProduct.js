@@ -5,6 +5,8 @@ import { useEffect } from "react";
 import PageNavigation from "../Components/PageNavigation";
 import styled from "styled-components";
 import EditProductForm from '../Components/EditProductForm';
+import AdminNavbar from '../Components/AdminNavbar'
+
 const Container = styled.div`
 
 display: flex;
@@ -12,7 +14,7 @@ img{
     width: 30%;
 }
 `
-const API = "http://localhost:4000/api/products";
+const API = "https://frefishserver.onrender.com/api/products";
 const EditProduct = () => {
   const { getSingleProduct, singleProduct, isSingleLoading } = useProductContext();
 
@@ -41,6 +43,7 @@ const EditProduct = () => {
   console.log(singleProduct.id);
   return (
     <>
+    <AdminNavbar/>
     <Container>
     <div className='product-info'>
     <div className="img">

@@ -4,7 +4,7 @@ import axios from "axios";
 const AppContext = createContext();
 
 //const API = "https://api.pujakaitem.com/api/products";
-const API = "http://localhost:4000/api/products";
+const API = "https://frefishserver.onrender.com/api/products";
 
 const initialState = {
   isLoading: false,
@@ -36,7 +36,7 @@ const getSingleProduct =async(url) =>{
   try {
     const res = await axios.get(url);
     const singleProduct = await res.data;
-    console.log(singleProduct);
+    // console.log(singleProduct);
     
     dispatch({type: "SET_SINGLE_PRODUCT",payload:singleProduct});
   } catch (error) {

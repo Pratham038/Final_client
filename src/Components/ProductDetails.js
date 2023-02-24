@@ -20,7 +20,7 @@ const ProductDetails = ({ product }) => {
   // };
   const handleDelete = (id) => {
 
-    axios.delete(`/api/products/${id}`, {
+    axios.delete(`https://frefishserver.onrender.com/api/products/${id}`, {
         headers : {
             'Content-Type': 'application/json'
         },
