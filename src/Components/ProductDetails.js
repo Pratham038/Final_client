@@ -30,7 +30,7 @@ const ProductDetails = ({ product }) => {
     })
         .then( resp => {
             console.log(resp.message);
-            navigate("/contact");
+            alert("PRODUCT DELETED ❌")
         })
         .catch( err => console.error );
 }

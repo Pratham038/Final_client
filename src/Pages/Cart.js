@@ -5,27 +5,27 @@ import { NavLink } from "react-router-dom";
 import { Button } from "../Components/AddToCart";
 import FormatPrice from "../helpers/FormatPrice";
 import { useAuth0 } from "@auth0/auth0-react";
-import {toast, ToastContainer} from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css'
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
-
+import { useState } from "react";
 const Cart = () => {
-
+  const [address, setAddress] = useState("");
   const navigate = useNavigate();
-  const { user, loginWithRedirect,isAuthenticated,isLoading } = useAuth0();
-  const { cart, total_item,clearCart, total_price, shipping_fee } = useCartContext();
+  const { user, loginWithRedirect, isAuthenticated, isLoading } = useAuth0();
+  const { cart, total_item, clearCart, total_price, shipping_fee } =
+    useCartContext();
 
-  const notify =()=>{
-    
-    toast.success("Order Placed Successfully 💕",{
-    position: toast.POSITION.TOP_RIGHT,
-    className: 'toast-message'
-  })
-  // setTimeout(() => {
-  //   navigate('/');
-  // }, 3000);
-};
-  
+  const notify = () => {
+    toast.success("Order Placed Successfully 💕", {
+      position: toast.POSITION.TOP_RIGHT,
+      className: "toast-message",
+    });
+    // setTimeout(() => {
+    //   navigate('/');
+    // }, 3000);
+  };
+
   //  console.log(cart);
 
   if (cart.length === 0) {
@@ -35,34 +35,40 @@ const Cart = () => {
   const placeOrder = async () => {
     try {
       const orderData = {
-        username:user.name,
-        user_email:user.email,
+        username: user.name,
+        user_email: user.email,
         cart: cart,
         quantity: total_item,
-        shipping_fee:shipping_fee,
-        total_price:total_price
+        shipping_fee: shipping_fee,
+        total_price: total_price,
+        address: address,
       };
 
       const response = await fetch("https://frefishserver.onrender.com/api/orders", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify(orderData)
+        body: JSON.stringify(orderData),
       });
 
-      const data = await response.json();
-      console.log(data);
-      notify();
-      setTimeout(() => {
-        navigate('/'); 
-        clearCart(); 
-      }, 2000);
-      
+      if (!response.ok) {
+        alert("Invalid Address");
+      }
+      if (response.ok) {
+        const data = await response.json();
+        console.log(data);
+        notify();
+        setTimeout(() => {
+          navigate("/");
+          clearCart();
+        }, 2000);
+      }
     } catch (error) {
       console.error(error);
     }
   };
+
   return (
     <Wrapper>
       <div className="container">
@@ -87,6 +93,14 @@ const Cart = () => {
           </NavLink>
           <Button onClick={clearCart}>clear cart</Button>
         </div>
+        <div className="address">
+          Enter Dilevery address :
+          <input
+            type="text"
+            onChange={(e) => setAddress(e.target.value)}
+            value={address}
+          />
+        </div>
         {/* order total_amount */}
         <div className="order-total--amount">
           <div className="order-total--subdata">
@@ -109,19 +123,20 @@ const Cart = () => {
                 <FormatPrice price={shipping_fee + total_price} />
               </p>
             </div>
-            { 
-            isAuthenticated?
-            <div>
-            <Button variant='contained' onClick={placeOrder}>Place Order</Button>
-            <ToastContainer/>
-            </div>
-            :
-            <div>
-              <h5>Login to Place Order </h5>
-              <br/>
-            <Button onClick={() => loginWithRedirect()}>Login</Button>
-          </div>
-}
+            {isAuthenticated ? (
+              <div>
+                <Button variant="contained" onClick={placeOrder}>
+                  Place Order
+                </Button>
+                <ToastContainer />
+              </div>
+            ) : (
+              <div>
+                <h5>Login to Place Order </h5>
+                <br />
+                <Button onClick={() => loginWithRedirect()}>Login</Button>
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -145,7 +160,7 @@ const Wrapper = styled.section`
 
   .toast-message {
     background: darkblue;
-}
+  }
   .grid {
     display: grid;
     gap: 9rem;

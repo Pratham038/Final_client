@@ -7,7 +7,7 @@ const ListView = ({ products }) => {
     <Wrapper className="section">
       <div className="container grid">
         {products.map((curElem) => {
-          const { id, name, image, price, description } = curElem;
+          const { id, name, image,category, price, description } = curElem;
           return (
             <div className="card grid grid-two-column">
                 <NavLink to={`/singleproduct/${id}`} >
@@ -19,8 +19,10 @@ const ListView = ({ products }) => {
 
               <div className="card-data">
                 <h3>{name}</h3>
+                <p>Category : {category}</p>
+
                 <p>
-                  <FormatPrice price={price} />
+                  Price : <FormatPrice price={price} />
                 </p>
                 <p>{description.slice(0, 90)}...</p>
 
@@ -38,6 +40,8 @@ const ListView = ({ products }) => {
 
 const Wrapper = styled.section`
   padding: 2rem 0;
+  background-color: #333;
+  border-radius: 20px;
 
   .container {
     max-width: 120rem;
@@ -60,6 +64,7 @@ const Wrapper = styled.section`
     overflow: hidden;
     transition: all 0.5s linear;
    height: 17rem;
+
     &::after {
       content: "";
       position: absolute;
@@ -72,33 +77,31 @@ const Wrapper = styled.section`
       opacity: 50%;
       cursor: pointer;
     }
-    &:hover::after {
-      width: 78%;
-    }
-    &:hover img {
-      transform: scale(1.2);
-    }
+
     img {
+      border-radius:7px ;
       margin-left: 2rem;
-      max-width: 90%;
+      width: 75%;
       margin-top: 1.5rem;
-   height: 15rem;
+      height: 15rem;
       transition: all 0.2s linear;
     }
   }
 
   .card {
     border: 0.1rem solid rgb(170 170 170 / 40%);
-
+ 
+    
     .card-data {
       padding: 0 2rem;
     }
 
     h3 {
-      margin: 2rem 0;
+      margin: 1rem 0;
       font-weight: 300;
       font-size: 2.4rem;
       text-transform: capitalize;
+      font-family: 'Times New Roman', Times, serif;
     }
 
     .btn {

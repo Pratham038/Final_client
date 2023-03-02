@@ -22,6 +22,7 @@ function OrdersPage() {
         <div className="orders">
         <div key={order._id}>
           <h2>Order by {order.username} ({order.user_email})</h2>
+          <p>Dilever AT : {order.address}</p>
           <p>Order date: {order.createdAt}</p>
         <div className="orders">
           <ul>

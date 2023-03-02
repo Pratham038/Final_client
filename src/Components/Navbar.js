@@ -1,21 +1,46 @@
 import React from "react";
-import lic from "../images/licious.svg";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { BiCart } from "react-icons/bi";
 import { useCartContext } from "../context/cart_context";
 import { useAuth0 } from "@auth0/auth0-react";
-
+import { useEffect } from "react";
+import axios from "axios";
 const Navbar = () => {
   const { loginWithRedirect, logout,user,  isAuthenticated } = useAuth0();
   
   const { total_item } = useCartContext();
   
+  
+    const handleSubmit = async () => {
+    try {
+      const response = await axios.post('https://frefishserver.onrender.com/api/users', {
+        username: user.name,
+        userMail: user.email,
+      });
+  
+
+    } catch (error) {
+      console.error(error);
+    }
+  }
+// useEffect(() => {
+//   if (isAuthenticated) {
+//     handleSubmit()
+//   }
+// }, [handleSubmit()])
+
+useEffect(() => {
+  if (isAuthenticated) {
+    handleSubmit();
+  }
+}, [isAuthenticated]);
+
   return (
     <NavbarContainer>
       <div className="navbar-brand">
         <Link to="/">
-          <img src={lic} alt="pok" />
+          FRE-FISH
         </Link>
       </div>
       <div className="nav-rig">
@@ -34,6 +59,9 @@ const Navbar = () => {
         {isAuthenticated ? (<>
                   <Link className="nav-link" to="/profile">
                   Profile
+                </Link>
+                <Link className="nav-link" to="/userorders">
+                  Orders
                 </Link>
           <li className="nav-link">
             <button
@@ -66,11 +94,15 @@ const NavbarContainer = styled.nav`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #333333;
+  background-color: black;
   color: white;
   padding: 0.7rem 2rem;
+  a{
+    text-decoration: none;
+    color: #fff;
+  }
 li{
-  background-color: #333333;
+  background-color: black;
   color: white;
 }
   .badge {
@@ -103,8 +135,11 @@ li{
     font-size: 24px;
   }
   .navbar-brand {
+    
     font-size: 2rem;
     font-style: none;
+    color: #fff;
+    font-weight: 700;
   }
 
   .nav-link {

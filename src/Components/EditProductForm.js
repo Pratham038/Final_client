@@ -2,7 +2,20 @@ import React from 'react'
 import { useState} from 'react';
 import axios from 'axios';
 import {  useParams, useNavigate } from 'react-router-dom';
-
+import styled from "styled-components";
+const Container = styled.div`
+form{
+  width: 80%;
+  padding: 5rem;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.form-group{
+  margin: 1rem;
+}
+`
 const EditProductForm = ({singleProduct}) => {
     const [single, setSingle] = useState({
         id: '',
@@ -19,29 +32,6 @@ const EditProductForm = ({singleProduct}) => {
 });
 const { id } = useParams();
 console.log(id);
-// useEffect(() => {
-//     axios
-//       .get(`http://localhost:8082/api/books/${id}`)
-//       .then((res) => {
-//         setSingle({
-//           id: res.data.id,
-//           name: res.data.name,
-//           image: res.data.image,
-//           description: res.data.description,
-//           colors: res.data.colors,
-//           price: res.data.price,
-//           stock: res.data.stock,
-//           reviews: res.data.reviews,
-//           stars: res.data.stars,
-//           category: res.data.category,
-//           featured: res.data.featured,
-//         });
-//       })
-//       .catch((err) => {
-//         console.log('Error from UpdateBookInfo');
-//       });
-//   }, [id]);
-
   const onChange = (e) => {
     setSingle({ ...single, [e.target.name]: e.target.value });
   };
@@ -49,34 +39,35 @@ console.log(id);
     e.preventDefault();
 
     const data = {
-        id: single.id,
-          name: single.name,
-          image: single.image,
-          description: single.description,
-          quantity: single.quantity,
-          price: single.price,
-          stock: single.stock,
-          reviews: single.reviews,
-          stars: single.stars,
-          category: single.category,
-          featured: single.featured,
+      id: singleProduct.id,
+      name: singleProduct.name,
+      image: singleProduct.image,
+      description: singleProduct.description,
+      quantity: singleProduct.quantity,
+      price: singleProduct.price,
+      stock: singleProduct.stock,
+      reviews: singleProduct.reviews,
+      stars: singleProduct.stars,
+      category: singleProduct.category,
+      featured: singleProduct.featured,
     };
 
     axios
-      .put(`https://frefishserver.onrender.com/api/products/${id}`, data)
+      .patch(`https://frefishserver.onrender.com/api/products/${id}`, data)
       .then((res) => {
-        alert('UPdated PRESS F5')
+        console.log(res);
       })
       .catch((err) => {
-        alert('UPdated PRESS F8')
+        console.log(err);
+        //alert('UPdated PRESS F8')
       });
   };
 
   return (
-    <>
+    <Container>
 <div className='UpdateBookInfo'>
       
-        <div className='col-md-8 m-auto'>
+        <div >
           <form noValidate onSubmit={onSubmit}>
             <div className='form-group'>
               <label htmlFor='name'>Name :</label>
@@ -216,13 +207,13 @@ console.log(id);
               type='submit'
               className='btn btn-outline-info btn-lg btn-block'
             >
-              Update Book
+              Update Product
             </button>
           </form>
           
         </div>
       </div>
-    </>
+    </Container>
   )
 }
 

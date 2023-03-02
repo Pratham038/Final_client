@@ -11,7 +11,7 @@ const Container = styled.div`
 
 display: flex;
 img{
-    width: 30%;
+    width: 300%;
 }
 `
 const API = "https://frefishserver.onrender.com/api/products";

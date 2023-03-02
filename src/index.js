@@ -9,8 +9,8 @@ import { Auth0Provider } from "@auth0/auth0-react";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <Auth0Provider
-    domain="dev-t3pd8jn1limi7uta.us.auth0.com"
-    clientId="l8BKRj2YPMDY46EchM8eGv3TWWjOu7rN"
+    domain="dev-hezhbmssbfuvj8qa.uk.auth0.com"
+    clientId="8347OTWkJRRuYjuO4aG77ZliccgI2Dz6"
     redirectUri={window.location.origin}
     useRefreshTokens
 cacheLocation="localstorage"

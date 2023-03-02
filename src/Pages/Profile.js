@@ -67,6 +67,7 @@ function Profile() {
       <p>Email: {updatedUser?.userMail || user.email}</p>
       <p>Address: {updatedUser?.useraddress || ''}</p>
       <button type="submit" onClick={handleSubmit}>Update Address</button>
+    <h3> Your Orders </h3>
     
     </>
   );

@@ -18,6 +18,8 @@ import AdminLoginpage from './Pages/AdminLoginpage';
 import AdminHome from './Pages/AdminHome';
 import AdminNavbar from './Components/AdminNavbar';
 import OrdersPage from './Pages/OrdersPage';
+import UserOrders from './Pages/UserOrders';
+import AdminUser from './Pages/AdminUser';
 
 const App = () => {
   return (
@@ -32,12 +34,13 @@ const App = () => {
           <Route path="/singleproduct/:id" element={<SingleProduct />} />
           <Route path="/editproduct/:id" element={<EditProduct />} />
           <Route path="/cart" element={<Cart />} />
+          <Route path="/userorders" element={<UserOrders/>} />
+
           <Route path="*" element={<ErrorPage />} />
           <Route path='/profile' element={<Profile/>}/>
           <Route path="/addPro" element={<Admin />} />
           <Route path="/addOrd" element={<OrdersPage/>} />
-          {/* <Route path="/addOrd" element={<AdminOrder/>} /> */}
-
+          <Route path="/admUsers" element={<AdminUser/>} />
           <Route path="/adminLoginPage" element={<AdminLoginpage/>} />
           <Route path='/admhome' element={<AdminHome/>}/>
     </Routes>

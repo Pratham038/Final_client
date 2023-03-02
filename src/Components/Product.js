@@ -6,37 +6,37 @@ const Card = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 300px;
-  height: 400px;
+  height:22rem;
+  width:15rem;
   background-color: white;
   border-radius: 10px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  margin: 20px;
+  margin: 1.25rem;
   overflow: hidden;
 
   border: 1px solid #333;
 `;
 
 const Image = styled.img`
-  width: 100%;
-  height: 60%;
+width:269px;
+height:187px;
   object-fit: cover;
 `;
 
 const Name = styled.h3`
-  margin: 10px 0;
+  margin: 0.5rem 0;
   font-size: 1.5rem;
   text-align: center;
 `;
 
 const Category = styled.p`
-  margin: 10px 0;
+  margin: 0.5rem 0;
   font-size: 1.2rem;
   color: gray;
 `;
 
 const Price = styled.p`
-  margin: 10px 0;
+  margin: 0.5rem 0;
   font-size: 1.5rem;
   font-weight: bold;
 `;

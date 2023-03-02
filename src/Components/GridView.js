@@ -15,6 +15,8 @@ const GridView = ({ products }) => {
 
 const Wrapper = styled.section`
   padding: 2rem 0;
+  background-color: #333;
+  border-radius: 20px;
   .container {
     max-width: 120rem;
   }

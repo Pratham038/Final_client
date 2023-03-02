@@ -48,9 +48,9 @@ const Products = () => {
                 <option value="#" disabled></option>
                 <option value="highest">Price(highest)</option>
                 <option value="#" disabled></option>
-                <option value="a-z">Price(a-z)</option>
+                <option value="a-z">Alphabetical(a-z)</option>
                 <option value="#" disabled></option>
-                <option value="z-a">Price(z-a)</option>
+                <option value="z-a">Alphabetical(z-a)</option>
               </select>
             </form>
           </div>
@@ -68,6 +68,9 @@ const Products = () => {
 };
 const SortFilter = styled.div`
   display: flex;
+  background-color: black;
+  color: #fff;
+  padding: 0.5rem 0rem;
   justify-content: space-around;
   .drop-list {
     padding: 0.2rem 0 0 0;
@@ -81,8 +84,12 @@ const SortFilter = styled.div`
     align-items: center;
   }
   .active {
-    background-color: black;
-    color: white;
+    background-color: white;
+    color: #0075ff;
+  }
+  .active {
+    background-color: #0075ff;
+    color:white;
   }
   .sort-icons {
     display: grid;
@@ -95,27 +102,26 @@ const SortFilter = styled.div`
 `;
 
 const MainroductList = styled.div`
-  background-color: aqua;
 `;
 
 const Wrapper = styled.div`
-  border: 3px solid aqua;
   display: flex;
   padding: 3rem 5rem;
+  background-color: black;
+  border-top: 1px solid #aeae;
+  a{
+    text-decoration: none;
+    
+  }
   .filters {
-    border: 3px solid #333;
     width: 15%;
   }
   .main-products {
-    background-color: yellow;
-    border: 3px solid #333;
     width: 85%;
   }
   .sort-filter {
-    border: 3px solid #333;
   }
   .products-list {
-    border: 3px solid #333;
   }
 `;
 export default Products;

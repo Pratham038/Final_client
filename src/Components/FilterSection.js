@@ -79,10 +79,15 @@ const categoryData = getUniqueData(all_products, "category");
   );
 };
 const Wrapper = styled.section`
-  padding: 5rem 0;
+  padding: 1rem ;
+  padding-left: 1.5rem;
   display: flex;
   flex-direction: column;
-  gap: 3rem;
+  gap: 1.5rem;
+  color: white;
+  background-color: #333;
+  height: 100%;
+  background-color: #000;
   h3 {
     padding: 2rem 0;
     font-size: bold;
@@ -90,7 +95,9 @@ const Wrapper = styled.section`
   .filter-search {
     input {
       padding: 0.6rem 1rem;
-      width: 80%;
+      width: 100%;
+      border-radius: 7px;
+      border: none;
     }
   }
   .filter-category {
@@ -101,6 +108,8 @@ const Wrapper = styled.section`
       gap: 1.4rem;
       button {
         border: none;
+        border-radius: 7px;
+        width: 8rem;
       }
       text-transform: capitalize;
       cursor: pointer;
@@ -111,8 +120,8 @@ const Wrapper = styled.section`
   }
   .active {
     border-bottom: 1px solid #000;
-    color: yellow;
-    background-color: #000;
+    color:#fff;
+    background-color: #0075ff;
   }
   .filter-company--select {
     padding: 0.3rem 1.2rem;
@@ -165,8 +174,8 @@ const Wrapper = styled.section`
     gap: 1rem;
   }
   .filter-clear .btn {
-    background-color: #ec7063;
-    color: #000;
+    background-color: #0075ff;
+    color: #fff;
   }
 `;
 export default FilterSection;
