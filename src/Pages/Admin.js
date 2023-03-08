@@ -4,10 +4,12 @@ import ProductDetails from "../Components/ProductDetails";
 import styled from "styled-components";
 import { NavLink } from "react-router-dom";
 import { Button } from "../Components/AddToCart";
-import {toast, ToastContainer} from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css'
-import AdminNavbar from '../Components/AdminNavbar'
-
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import AdminNavbar from "../Components/AdminNavbar";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { AiFillDelete } from "react-icons/ai";
 const Admin = () => {
   const [name, setName] = useState("");
   const [id, setId] = useState("");
@@ -18,24 +20,13 @@ const Admin = () => {
   const [description, setDescription] = useState("");
   const [stock, setStock] = useState("");
   const [category, setCategory] = useState("");
-  const [featured, setFeatured] = useState("");
+  const [featured, setFeatured] = useState(true);
   const [error, setError] = useState(null);
   const [quantity, setQuantity] = useState([]);
-
+  const [searchQuery, setSearchQuery] = useState('');
+  const navigate = useNavigate();
   //fetcch
   const [products, setProducts] = useState(null);
-  useEffect(() => {
-    const fetchProducts = async () => {
-      const response = await fetch("https://frefishserver.onrender.com/api/products");
-      const json = await response.json();
-
-      if (response.ok) {
-        setProducts(json);
-      }
-    };
-
-    fetchProducts();
-  }, []);
 
   const prductNewSubmit = async (e) => {
     e.preventDefault();
@@ -53,13 +44,16 @@ const Admin = () => {
       featured,
     };
 
-    const response = await fetch("https://frefishserver.onrender.com/api/products", {
-      method: "POST",
-      body: JSON.stringify(product),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    const response = await fetch(
+      "https://frefishserver.onrender.com/api/products",
+      {
+        method: "POST",
+        body: JSON.stringify(product),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
     const json = await response.json();
     if (!response.ok) {
       setError(json.error);
@@ -69,7 +63,7 @@ const Admin = () => {
       setPrice("");
       setDescription("");
       setCategory("");
-      setFeatured("");
+      setFeatured(true);
       setStock("");
       setId("");
       setReviews("");
@@ -77,104 +71,132 @@ const Admin = () => {
       setImage("");
       setError(null);
       // console.log("new product added", json);
-      toast.success("Product Added💕",{
+      toast.success("Product Added💕", {
         position: toast.POSITION.TOP_RIGHT,
-        className: 'toast-message'
-      })
+        className: "toast-message",
+      });
     }
-    if (!response.ok){
-      toast.error("Product not Added",{
+    if (!response.ok) {
+      toast.error("Product not Added", {
         position: toast.POSITION.TOP_RIGHT,
-        className: 'toast-message'
-      })
+        className: "toast-message",
+      });
     }
   };
+  useEffect(() => {
+    const fetchProducts = async () => {
+      const response = await fetch(
+        "https://frefishserver.onrender.com/api/products"
+      );
+      const json = await response.json();
+
+      if (response.ok) {
+        setProducts(json);
+      }
+    };
+
+    fetchProducts();
+  }, []);
+
   const handleColorsChange = (event) => {
     setQuantity(event.target.value.split(","));
   };
 
+  const handleDelete = (id) => {
+    axios
+      .delete(`https://frefishserver.onrender.com/api/products/${id}`, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        params: {
+          id: id,
+        },
+      })
+      .then((resp) => {
+        console.log(resp.message);
+        alert("PRODUCT DELETED ❌");
+        navigate("/admhome");
+      })
+      .catch((err) => console.error);
+  };
+  const filteredProducts = products?.filter((product) =>
+  product.name.toLowerCase().includes(searchQuery.toLowerCase())
+);
+
   return (
     <>
-    <AdminNavbar/>
+      <AdminNavbar />
       <Wrapper>
         <Seperateproduct>
           <form onSubmit={prductNewSubmit}>
             <h3>ADD A new Product</h3>
-
             <input
-            placeholder="Product ID"
+              placeholder="Product ID"
               type="text"
               onChange={(e) => setId(e.target.value)}
               value={id}
             />
-
             <input
-            placeholder="Product Name"
+              placeholder="Product Name"
               type="text"
               onChange={(e) => setName(e.target.value)}
               value={name}
             />
-
             <input
-            placeholder="Product Price"
+              placeholder="Product Price"
               type="number"
               onChange={(e) => setPrice(e.target.value)}
               value={price}
             />
-
             <input
-            placeholder="Product Description"
+              placeholder="Product Description"
               type="text"
               onChange={(e) => setDescription(e.target.value)}
               value={description}
             />
-
             <input
-            placeholder="Product stock"
+              placeholder="Product stock"
               type="number"
               onChange={(e) => setStock(e.target.value)}
               value={stock}
             />
-
             <input
-            placeholder="Product Reviews"
+              placeholder="Product Reviews"
               type="number"
               onChange={(e) => setReviews(e.target.value)}
               value={reviews}
             />
-
             <input
-            placeholder="Product stars"
+              placeholder="Product stars"
               type="number"
               onChange={(e) => setStars(e.target.value)}
               value={stars}
+              max={5}
             />
-
-            <input
-            placeholder="Product Advertised ? "
-              type="text"
+            Advertise ?? :
+            <select
               onChange={(e) => setFeatured(e.target.value)}
               value={featured}
-            />
-
+            >
+              <option value="true">Yes</option>
+              <option value="false">No</option>
+            </select>
             <input
-            placeholder="Product category"
+              placeholder="Product category"
               type="text"
               onChange={(e) => setCategory(e.target.value)}
               value={category}
             />
-
             <input
-            placeholder="Product Image link"
+              placeholder="Product Image link"
               type="text"
               onChange={(e) => setImage(e.target.value)}
               value={image}
             />
-
             {/* TRY0 */}
             <div>
               <input
-              placeholder="Size"
+                placeholder="Size"
                 type="text"
                 id="quantity"
                 name="quantity"
@@ -182,49 +204,90 @@ const Admin = () => {
                 onChange={handleColorsChange}
               />
             </div>
-
             <Button type="submit" onSubmit={prductNewSubmit}>
               Add Product
             </Button>
-            {error && <div className="error">{error}</div>}
+            {/* {error && <div className="error">{error}</div>} */}
           </form>
         </Seperateproduct>
+
         <div className="products">
+        <input
+      type="text"
+      placeholder="Search products"
+      value={searchQuery}
+      onChange={(e) => setSearchQuery(e.target.value)}
+    />
+
+            {filteredProducts &&
+        filteredProducts.map((product) => (
+          <Crad>
+            <NavLink to={`/editproduct/${product.id}`}>
+              <ProductDetails key={product._id} product={product} />
+            </NavLink>
+            <Button onClick={() => handleDelete(product.id)}>
+              <AiFillDelete /> DELETE
+            </Button>
+          </Crad>
+        ))}
+        </div>
+{/* <div className="products">
           {products &&
             products.map((product) => (
-              <>
+              <Crad>
                 <NavLink to={`/editproduct/${product.id}`}>
                   <ProductDetails key={product._id} product={product} />
                 </NavLink>
-              </>
+                <Button
+                  onClick={() => {
+                    handleDelete(product.id);
+                  }}
+                >
+                  <AiFillDelete /> DELETE
+                </Button>
+              </Crad>
             ))}
         </div>
+         */}
       </Wrapper>
     </>
   );
 };
 
 export default Admin;
+const Crad = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+`;
 
 const Wrapper = styled.div`
   display: flex;
   width: 100%;
   flex-direction: row-reverse;
-
-  .products{
-    width: 100%;
+  background-color: black;
+  text-decoration: none;
+  a {
+    text-decoration: none;
+    color: #fff;
   }
-  h3{
-    text-align:center;
+  .products {
+    width: 100%;
+    background-color: black;
   }
 `;
 
 const Seperateproduct = styled.div`
-width: 30%;
-  background-color: aqua;
-  margin: 1rem;
-  padding: 1rem;
-  border-radius: 7%;
+  width: 30%;
+  background-color: black;
+  color: #fff;
+  margin: 0 1rem;
+  padding: 1rem 0rem;
   height: 100%;
-
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  input {
+    margin: 0.5rem;
+  }
 `;

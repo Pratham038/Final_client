@@ -8,8 +8,8 @@ const AboutUsContainer = styled.div`
   padding: 1rem;
   
     img{
-      width: 100%;
-      height : 50%;
+      width: 80%;
+      height : 40%;
       border-radius: 50%;
     }
     .img-cont{

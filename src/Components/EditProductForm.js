@@ -17,45 +17,47 @@ form{
 }
 `
 const EditProductForm = ({singleProduct}) => {
+  const navigate = useNavigate();
     const [single, setSingle] = useState({
         id: '',
-        name: '',
-        image: '',
-        description: '',
-        quantity: '',
-        price: '',
-        stock: '',
-        reviews: '',
-        stars: '',
-        category: '',
-        featured: '',
+        name: singleProduct.name,
+        image:  singleProduct.image,
+        description: singleProduct.description,
+        quantity: singleProduct.quantity,
+        price: singleProduct.price,
+        stock: singleProduct.stock,
+        reviews: singleProduct.reviews,
+        stars: singleProduct.stars,
+        category: singleProduct.category,
+        featured: singleProduct.featured,
 });
 const { id } = useParams();
 console.log(id);
   const onChange = (e) => {
     setSingle({ ...single, [e.target.name]: e.target.value });
   };
+
   const onSubmit = (e) => {
     e.preventDefault();
 
     const data = {
-      id: singleProduct.id,
-      name: singleProduct.name,
-      image: singleProduct.image,
-      description: singleProduct.description,
-      quantity: singleProduct.quantity,
-      price: singleProduct.price,
-      stock: singleProduct.stock,
-      reviews: singleProduct.reviews,
-      stars: singleProduct.stars,
-      category: singleProduct.category,
-      featured: singleProduct.featured,
+      name: single.name,
+      image: single.image,
+      description: single.description,
+      quantity: single.quantity,
+      price: single.price,
+      stock: single.stock,
+      reviews: single.reviews,
+      stars: single.stars,
+      category: single.category,
+      featured: single.featured,
     };
 
     axios
       .patch(`https://frefishserver.onrender.com/api/products/${id}`, data)
       .then((res) => {
         console.log(res);
+        alert('UPdated PRESS F8');
       })
       .catch((err) => {
         console.log(err);
@@ -79,28 +81,15 @@ console.log(id);
                 onChange={onChange}
               />
             </div>
-            <br />
-
-            <div className='form-group'>
-              <label htmlFor='id'>ID :</label>
-              <input
-                type='text'
-                placeholder='ID'
-                name='id'
-                className='form-control'
-                value={single.id}
-                onChange={onChange}
-              />
-            </div>
+            
             <br />
             <div className='form-group'>
               <label htmlFor='image'>Image :</label>
               <input
                 type='text'
-                placeholder='Image link'
                 name='image'
                 className='form-control'
-                value={single.id}
+                value={single.image}
                 onChange={onChange}
               />
             </div>
@@ -206,7 +195,7 @@ console.log(id);
             <button
               type='submit'
               className='btn btn-outline-info btn-lg btn-block'
-            >
+              onClick={onSubmit}>
               Update Product
             </button>
           </form>

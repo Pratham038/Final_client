@@ -19,7 +19,7 @@ const AdminLoginpage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = (event) => {
+  const handleAdmin = (event) => {
     event.preventDefault();
     if (username === "admin" && password === "admin123") {
       navigate("/admhome");
@@ -31,7 +31,7 @@ const AdminLoginpage = () => {
   return (
     <Wrapper style={myStyle}>
       <div className="seventy">
-        <Form onSubmit={handleSubmit}>
+        <Form onSubmit={handleAdmin}>
           <Input
             type="username"
             placeholder="username"

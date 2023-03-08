@@ -5,7 +5,6 @@ import { useParams } from "react-router-dom";
 import { useProductContext } from "../context/productContext";
 import FormatPrice from "../helpers/FormatPrice";
 import PageNavigation from "../Components/PageNavigation";
-import MyImage from "../Components/MyImage";
 import { MdSecurity } from "react-icons/md";
 import { TbTruckDelivery, TbReplace } from "react-icons/tb";
 import Star from "../Components/Star";

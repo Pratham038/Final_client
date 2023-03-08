@@ -51,8 +51,9 @@ const AdminUser = () => {
           {filteredUsers &&
             filteredUsers.map((user) => (
               <div key={user.id} className="orders">
-                <p>{user.username}</p>
-                <p>{user.userMail}</p>
+                <p>Username : {user.username}</p>
+                <p>User Mail :{user.userMail}</p>
+                <p>ADRDESS : {user.useraddress}</p>
               </div>
             ))}
         </div>

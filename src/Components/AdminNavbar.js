@@ -40,7 +40,7 @@ const AdminNavbar = () => {
     <Nav>
       
       <div className="navbar-brand">
-        <Link to="/addOrd">
+        <Link to="/admhome">
           FRE-FISH
         </Link>
       </div>
